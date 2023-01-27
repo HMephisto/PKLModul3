@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,12 +17,29 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/product/tambah', function() {
-    return view('tambah_product');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/product/tambah', function() {
+        return view('tambah_product');
+    });
+    Route::get('/', [ProductController::class, "index"])->name('home');
+    Route::post('/product/tambah', [ProductController::class, "store"]);
+    Route::get('/product/edit/{id}', [ProductController::class, "show_edit"])->where('id', '[0-9]+');
+    Route::put('/product/edit/{id}', [ProductController::class, "edit"])->where('id', '[0-9]+');
+    Route::delete('/product/delete/{id}', [ProductController::class, "delete"])->where('id', '[0-9]+');
 });
 
-Route::get('/', [ProductController::class, "index"])->name('home');
-Route::post('/product/tambah', [ProductController::class, "store"]);
-Route::get('/product/edit/{id}', [ProductController::class, "show_edit"])->where('id', '[0-9]+');
-Route::put('/product/edit/{id}', [ProductController::class, "edit"])->where('id', '[0-9]+');
-Route::delete('/product/delete/{id}', [ProductController::class, "delete"])->where('id', '[0-9]+');
+
+
+Route::post('/register', [LoginController::class, "register"]);
+Route::post('/login', [LoginController::class, "login"]);
+Route::post('/logout', [LoginController::class, "logout"]);
+
+
+Route::get('/register', function() {
+    return view('register');
+})->name('register');
+Route::get('/login', function() {
+    return view('login');
+})->name('login');
