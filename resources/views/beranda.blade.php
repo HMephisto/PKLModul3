@@ -14,15 +14,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-
-    <div class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true" id="myToast">
-        <div class="d-flex">
-            <div class="toast-body">
-                Hello, world! This is a toast message.
-            </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-    </div>
+    <form action="/logout" method="POST">
+        @csrf
+        <button class="btn btn-danger " type="submit">Logout</button>
+    </form>
     <div class="d-flex justify-content-between">
         <div class="p-2 bd-highlight">
             <h1>Daftar Product</h1>
