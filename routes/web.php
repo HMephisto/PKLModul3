@@ -4,6 +4,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
+use function PHPSTORM_META\map;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,10 +16,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-
-
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/product/tambah', function () {

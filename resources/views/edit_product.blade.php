@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Halaman Tambah Product</title>
+    <title>Halaman Edit Product</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
 </head>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,14 +14,8 @@ class ProductController extends Controller
         $products = Product::orderBy("id", "ASC")->get();
         return view('beranda', ["products" => $products]);
     }
-    public function store(Request $r)
+    public function store(ProductRequest $r)
     {
-        $r->validate([
-            "name" => "required|string",
-            "price" => "required|integer",
-            "brand" => "required|string",
-        ]);
-
         Product::create([
             "name" => $r->name,
             "price" => $r->price,
@@ -37,13 +32,8 @@ class ProductController extends Controller
         return view('edit_product', ["product" => $product]);
     }
 
-    public function edit(Request $r, $id)
+    public function edit(ProductRequest $r, $id)
     {
-        $r->validate([
-            "name" => "required|string",
-            "price" => "required|integer",
-            "brand" => "required|string",
-        ]);
 
         $product = Product::findorfail($id);
         $product->name = $r->name;
