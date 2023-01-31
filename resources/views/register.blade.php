@@ -59,9 +59,12 @@
                 <label for="floatingInput">Name</label>
             </div>
             <div class="form-floating">
-                <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email"
+                <input type="email" class="form-control @error('password') is-invalid @enderror" id="email" placeholder="name@example.com" name="email"
                     required>
                 <label for="floatingInput">Email address</label>
+                @error('email')
+                    {{ $message }}
+                @enderror
             </div>
             <div class="form-floating">
                 <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"

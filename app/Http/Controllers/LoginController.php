@@ -2,52 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    //
-    public function register(Request $request)
-    {   
-        $request->validate([
-            "name"=>"required|string",
-            "email"=>"required|email",
-            "password"=>"required|confirmed",
-        ]);
+    private $userService;
 
-        User::create([
-            "name"=>$request->name,
-            "email"=>$request->email,
-            "password"=> Hash::make($request->password),
-        ]);
+    public function __construct()
+    {
+        $this->userService = new UserService();
+    }
 
+    public function showRegister()
+    {
+        return view('register');
+    }
+    
+    public function showLogin()
+    {
+        return view('login');
+    }
+
+    public function register(RegisterRequest $request)
+    {
+        $this->userService->saveUser($request->validated());
         return redirect()->route("login")->with('success', "Regristation Successfull! Please Login");
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->validate([
-            "email"=>"required|email",
-            "password"=>"required",
-        ]);
-
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($request->validated())) {
             return redirect()->route('home');
         };
-
         return back()->with('error', 'Login Failed');
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect()->route('login');
     }
 }

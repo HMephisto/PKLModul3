@@ -3,51 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
-    //
-    public function index()
-    {
-        $products = Product::orderBy("id", "ASC")->get();
-        return view('beranda', ["products" => $products]);
-    }
-    public function store(ProductRequest $r)
-    {
-        Product::create([
-            "name" => $r->name,
-            "price" => $r->price,
-            "brand" => $r->brand,
-        ]);
+    public $productService;
 
-        return redirect()->route('home')->with("success", "Data berhasil ditambahkan");
+    public function __construct()
+    {
+        $this->productService = new ProductService();
     }
 
-    public function show_edit($id)
+    public function showHome()
     {
-        $product = Product::findorfail($id);
-
-        return view('edit_product', ["product" => $product]);
+        return view('home', ["products" => $this->productService->getAllProduct()]);
+    }
+    public function store(ProductRequest $request)
+    {
+        $this->productService->saveProduct($request->validated());
+        return redirect()->route('home')->with("success", "Data was successfully added");
     }
 
-    public function edit(ProductRequest $r, $id)
+    public function showEdit($id)
     {
+        return view('edit-product', ["product" => $this->productService->getDetailProduct($id)]);
+    }
+    
+    public function showAddProduct()
+    {
+        return view('add-product');
+    }
 
-        $product = Product::findorfail($id);
-        $product->name = $r->name;
-        $product->price = $r->price;
-        $product->brand = $r->brand;
-        $product->save();
-
-        return redirect()->route('home')->with("success", "Data berhasil diupdate");
+    public function edit(ProductRequest $request, $id)
+    {
+        $this->productService->updateProduct($request->validated(), $id);
+        return redirect()->route('home')->with("success", "Data was successfully updated");
     }
 
     public function delete($id)
     {
-        $product = Product::findorfail($id);
-        $product->delete();
-        return redirect()->route('home')->with("success", "Data berhasil dihapus");
+        $this->productService->deleteProduct($id);
+        return redirect()->route('home')->with("success", "Data was successfully deleted");
     }
 }

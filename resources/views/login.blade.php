@@ -68,11 +68,11 @@
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             <div class="form-floating">
-                <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email">
+                <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>
                 <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                 <label for="floatingPassword">Password</label>
             </div>
 
