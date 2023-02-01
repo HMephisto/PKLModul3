@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Halaman Edit Product</title>
+    <title>Edit Product</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8 ps-0 ">
-                    <form method="POST" action="/product/edit/{{$product->id}}" enctype="multipart/form-data">
+                    <form method="POST" action="/products/edit/{{$product->id}}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         <div class="row mb-3 ">

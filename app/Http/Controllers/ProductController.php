@@ -18,20 +18,21 @@ class ProductController extends Controller
     {
         return view('home', ["products" => $this->productService->getAllProduct()]);
     }
-    public function store(ProductRequest $request)
-    {
-        $this->productService->saveProduct($request->validated());
-        return redirect()->route('home')->with("success", "Data was successfully added");
-    }
-
-    public function showEdit($id)
-    {
-        return view('edit-product', ["product" => $this->productService->getDetailProduct($id)]);
-    }
     
     public function showAddProduct()
     {
         return view('add-product');
+    }
+
+    public function showEditProduct($id)
+    {
+        return view('edit-product', ["product" => $this->productService->getDetailProduct($id)]);
+    }
+    
+    public function store(ProductRequest $request)
+    {
+        $this->productService->saveProduct($request->validated());
+        return redirect()->route('home')->with("success", "Data was successfully added");
     }
 
     public function edit(ProductRequest $request, $id)

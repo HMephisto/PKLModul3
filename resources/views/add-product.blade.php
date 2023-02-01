@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Halaman Tambah Product</title>
+    <title>Add Product</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
@@ -10,11 +10,11 @@
 <body style="padding: 5%">
     <div class="container overflow-hidden">
         <div class=" rounded p-2 position-relative">
-            <h1 class="text-center">Tambah Product</h1>
+            <h1 class="text-center">Add Product</h1>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-8 ps-0 ">
-                    <form method="POST" action="/product/tambah" enctype="multipart/form-data">
+                    <form method="POST" action="/products/add" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="row mb-3 ">
                             <label for="name" class="col-sm-2 col-form-label ">Name</label>
