@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BrandRequest;
-use App\Services\BrandService;
-use Illuminate\Http\Request;
+use App\Interfaces\BrandRepositoryInterface;
 
 class BrandController extends Controller
 {
-    private $brandService;
+    private BrandRepositoryInterface $brandRepository;
 
-    public function __construct()
+    public function __construct(BrandRepositoryInterface $brandRepository)
     {
-        $this->brandService = new BrandService();
+        $this->brandRepository = $brandRepository;
     }
 
     public function showBrands()
     {
-        return view('brand', ["brands" => $this->brandService->getAllBrand()]);
+        return view('brand', ["brands" => $this->brandRepository->getAllBrand()]);
     }
 
     public function showAddBrand()
@@ -27,24 +26,24 @@ class BrandController extends Controller
 
     public function showEditBrand($id)
     {
-        return view('edit-brand', ["brand" => $this->brandService->getDetailBrand($id)]);
+        return view('edit-brand', ["brand" => $this->brandRepository->getBrandById($id)]);
     }
 
     public function store(BrandRequest $request)
     {
-        $this->brandService->saveBrand($request->validated());
+        $this->brandRepository->createBrand($request->validated());
         return redirect()->route('brand')->with("success", "Data was successfully added");
     }
 
     public function edit(BrandRequest $request, $id)
     {
-        $this->brandService->updateBrand($request->validated(), $id);
+        $this->brandRepository->updateBrand($request->validated(), $id);
         return redirect()->route('brand')->with("success", "Data was successfully updated");
     }
 
     public function delete($id)
     {
-        $this->brandService->deleteBrand($id);
+        $this->brandRepository->deleteBrand($id);
         return redirect()->route('brand')->with("success", "Data was successfully deleted");
     }
 }

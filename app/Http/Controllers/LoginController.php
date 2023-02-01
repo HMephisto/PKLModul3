@@ -4,24 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Services\UserService;
+use App\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    private $userService;
+    private UserRepositoryInterface $userRepository;
 
-    public function __construct()
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->userService = new UserService();
+        $this->userRepository = $userRepository;
     }
 
     public function showRegister()
     {
         return view('register');
     }
-    
+
     public function showLogin()
     {
         return view('login');
@@ -29,7 +29,7 @@ class LoginController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $this->userService->saveUser($request->validated());
+        $this->userRepository->createUser($request->validated());
         return redirect()->route("login")->with('success', "Regristation Successfull! Please Login");
     }
 
