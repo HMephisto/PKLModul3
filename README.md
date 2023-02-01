@@ -3,11 +3,23 @@
 
 # PKL MODUL 3 
 
-Membuat sebuah project laravel yang terintegrasi dengan database PostgreSQL
+Build a laravel project that integrated with PostgreSQL database
 
 ## 3.1 
- - Membuat tabel products menngunakan migration 
- - Membuat 3 buah halaman 
-    - halaman beranda: Untuk melihat daftar semua product 
-    - halaman tambah product : untuk menambah data product 
-    - halaman edit product : untuk mengubah data product 
+ - Create products table with migration 
+ - Create 3 pages : 
+    - Home page : To see a list of all products
+    - Add product page : To add product 
+    - Edit product page : To edit product 
+
+## 3.2
+ - Create brands table with migration 
+ - Implement best practice to the project :
+    - Using services for business logic 
+    - Route grouping 
+    - Using laravel naming conventions
+ - Implement form request for product, brand, register and login validation 
+ - Create 3 pages :  
+    - Brands page : To see a list of all brands
+    - Add brand page : To add brand 
+    - Edit brand page : To edit brand 
