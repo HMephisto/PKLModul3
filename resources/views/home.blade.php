@@ -18,7 +18,7 @@
         @csrf
         <a href="/brands" class="btn btn-info" style="width: 80px">Brand</a>
         <div style="width:20px"></div>
-        <button class="btn btn-danger " type="submit" style="width: 80px " >Logout</button>
+        <button class="btn btn-danger " type="submit" style="width: 80px ">Logout</button>
     </form>
 
     <div class="d-flex justify-content-between">
@@ -46,7 +46,9 @@
                     <th scope="row">{{ $key + 1 }}</th>
                     <td scope="row">{{ $product->name }}</td>
                     <td scope="row">Rp. {{ number_format($product->price, 0, ',', '.') }}</td>
-                    <td scope="row">{{ $product->brand }}</td>
+                    <td scope="row">
+                        {{ empty($product->brand->name) ? 'Null' : $product->brand->name }}
+                    </td>
                     <td scope="row">
                         <form method="POST" action="products/delete/{{ $product->id }}">
                             @method('delete')

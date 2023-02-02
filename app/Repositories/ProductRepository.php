@@ -16,12 +16,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAllProduct()
     {
-        return $this->products::orderBy("id", "ASC")->get();
+        return $this->products::orderBy("id", "ASC")->with("brand")->get();
     }
 
     public function getProductById($id)
     {
-        return $this->products::findorfail($id);
+        return $this->products::with("brand")->findorfail($id);
     }
 
     public function createProduct($productDetails)

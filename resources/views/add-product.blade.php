@@ -30,8 +30,7 @@
                         <div class="row mb-3">
                             <label for="price" class="col-sm-2 col-form-label">Price</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" id="price" name="price"
-                                    required>
+                                <input type="number" class="form-control" id="price" name="price" required>
                                 @if ($errors->has('price'))
                                     <div class="text-danger">
                                         {{ $errors->first('price') }}
@@ -43,18 +42,22 @@
                             <label for="brand" class="col-sm-2 col-form-label">Brand
                             </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="brand" name="brand"
-                                    required >
+                                {{-- <input type="text" class="form-control" id="brand" name="brand" required>
                                 @if ($errors->has('brand'))
                                     <div class="text-danger">
                                         {{ $errors->first('brand') }}
                                     </div>
-                                @endif
+                                @endif --}}
+                                <select name="brand_id" class="form-select" aria-label="Default select example">
+                                    @foreach ($brands as $brand)
+                                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                    @endforeach
+                                    <option value="" selected>Null</option>
+                                </select>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center gap-2">
-                            <a class="btn btn-danger btn-lg btn-block" href="/"
-                                style="max-width: 200px">back</a>
+                            <a class="btn btn-danger btn-lg btn-block" href="/" style="max-width: 200px">back</a>
                             <button type="submit" value="Upload" class="btn btn-primary btn-lg btn-block"
                                 style="max-width: 200px ">Submit</button>
                         </div>

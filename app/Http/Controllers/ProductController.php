@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
+use App\Interfaces\BrandRepositoryInterface;
 use App\Interfaces\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
     private ProductRepositoryInterface $productRepository;
+    private BrandRepositoryInterface $brandRepository;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(ProductRepositoryInterface $productRepository, BrandRepositoryInterface $brandRepository)
     {
         $this->productRepository = $productRepository;
+        $this->brandRepository = $brandRepository;
     }
 
     public function showHome()
@@ -21,12 +24,15 @@ class ProductController extends Controller
 
     public function showAddProduct()
     {
-        return view('add-product');
+        return view('add-product', ["brands" => $this->brandRepository->getAllBrand()]);
     }
 
     public function showEditProduct($id)
     {
-        return view('edit-product', ["product" => $this->productRepository->getProductById($id)]);
+        return view('edit-product', [
+            "product" => $this->productRepository->getProductById($id),
+            "brands" => $this->brandRepository->getAllBrand()
+        ]);
     }
 
     public function store(ProductRequest $request)

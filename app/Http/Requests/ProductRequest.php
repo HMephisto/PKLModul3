@@ -33,9 +33,9 @@ class ProductRequest extends FormRequest
                 "integer",
                 "min:1000",
             ],
-            "brand" => [
-                "required",
-                "string",
+            "brand_id" => [
+                "nullable",
+                "exists:brands,id",
             ],
         ];
     }
@@ -43,7 +43,7 @@ class ProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'price.min' => 'the minimal amout is Rp 1000',
+            'price.min' => 'the minimal price is Rp 1000',
         ];
     }
 }
