@@ -26,7 +26,8 @@ class BrandRequest extends FormRequest
         return [
             "name" => [
                 "required",
-                "string"
+                "string",
+                "max:255"
             ],
         ];
     }

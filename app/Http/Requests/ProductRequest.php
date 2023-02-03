@@ -26,12 +26,15 @@ class ProductRequest extends FormRequest
         return [
             "name" => [
                 "required",
-                "string"
+                "string",
+                "max:255"
             ],
             "price" => [
                 "required",
                 "integer",
                 "min:1000",
+                "numeric",
+                "max:2147483647"
             ],
             "brand_id" => [
                 "nullable",
@@ -44,6 +47,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'price.min' => 'the minimal price is Rp 1000',
+            'price.max' => 'the price is too high'
         ];
     }
 }
