@@ -23,3 +23,9 @@ Build a laravel project that integrated with PostgreSQL database
     - Brands page : To see a list of all brands
     - Add brand page : To add brand 
     - Edit brand page : To edit brand 
+
+## 3.3
+ - Update table products with migration :
+    - Change brand collumn datatype to bigint and rename it to brand_id
+ - Add one-to-one relation to products model 
+ - Implement Repository Pattern to the project 
