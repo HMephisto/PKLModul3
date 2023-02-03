@@ -14,12 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE products ALTER COLUMN 
-                brand TYPE BIGINT USING (brand)::BIGINT');
+        // DB::statement('ALTER TABLE products ALTER COLUMN 
+        //         brand TYPE BIGINT USING (brand)::BIGINT');
 
         Schema::table('products', function (Blueprint $table) {
-            $table->bigInteger("brand")->nullable()->change();
-            $table->renameColumn('brand', 'brand_id');
+            $table->dropColumn("brand");
+            $table->bigInteger('brand_id')->nullable();
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
         });
     }
@@ -33,10 +33,11 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['brand_id']);
-            $table->renameColumn('brand_id', 'brand');
+            $table->dropColumn("brand_id");
+            $table->string('brand');
         });
-     
-        DB::statement('ALTER TABLE products ALTER COLUMN 
-                brand TYPE VARCHAR USING (brand)::VARCHAR');
+    
+        // DB::statement('ALTER TABLE products ALTER COLUMN 
+        //         brand TYPE VARCHAR USING (brand)::VARCHAR');
     }
 };
