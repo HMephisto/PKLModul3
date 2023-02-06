@@ -16,7 +16,7 @@ class UserRepository implements UserRepositoryInterface
     }
     public function getAllUser()
     {
-        return $this->users::orderBy("id", "ASC")->get();
+        return $this->users::oldest("id")->get();
     }
 
     public function getUserById($id)

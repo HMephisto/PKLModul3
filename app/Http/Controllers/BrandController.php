@@ -46,4 +46,11 @@ class BrandController extends Controller
         $this->brandRepository->deleteBrand($id);
         return redirect()->route('brand')->with("success", "Data was successfully deleted");
     }
+
+    public function showBrandwithProduct()
+    {
+        $brands = $this->brandRepository->getAllBrandWithProduct();
+        return response()->json($brands);
+    }
+
 }

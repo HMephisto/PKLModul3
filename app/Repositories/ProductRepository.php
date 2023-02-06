@@ -16,7 +16,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAllProduct()
     {
-        return $this->products::orderBy("id", "ASC")->with("brand")->get();
+        return $this->products::oldest("id")->with("brand")->get();
     }
 
     public function getProductById($id)

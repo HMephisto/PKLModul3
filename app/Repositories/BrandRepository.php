@@ -15,7 +15,7 @@ class BrandRepository implements BrandRepositoryInterface
     }
     public function getAllBrand()
     {
-        return $this->brands::orderBy("id", "ASC")->get();
+        return $this->brands::oldest("id")->get();
     }
 
     public function getBrandById($id)
@@ -36,5 +36,10 @@ class BrandRepository implements BrandRepositoryInterface
     public function deleteBrand($id)
     {
         $this->brands::where('id', $id)->delete();
+    }
+
+    public function getAllBrandWithProduct()
+    {
+        return $this->brands::with('product')->get();
     }
 }
