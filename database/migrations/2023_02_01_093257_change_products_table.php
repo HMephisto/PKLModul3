@@ -34,7 +34,7 @@ return new class extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->dropForeign(['brand_id']);
             $table->dropColumn("brand_id");
-            $table->string('brand');
+            $table->string('brand')->default("null");
         });
     
         // DB::statement('ALTER TABLE products ALTER COLUMN 
