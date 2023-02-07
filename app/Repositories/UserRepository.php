@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\UserRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 

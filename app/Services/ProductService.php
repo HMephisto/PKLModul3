@@ -1,39 +1,39 @@
 <?php
 namespace App\Services;
 
-use App\Models\Product;
+use App\Repositories\Interfaces\ProductRepositoryInterface;
 
 class ProductService
 {
-    private $products;
+    private $productRepo;
 
-    public function __construct()
+    public function __construct(ProductRepositoryInterface $productRepo)
     {
-        $this->products = new Product();
+        $this->productRepo = $productRepo;
     }
 
     public function getAllProduct()
     {
-        return $this->products::orderBy("id", "ASC")->get();
+        return $this->productRepo->getAllProduct();
     }
 
     public function getDetailProduct($id)
     {
-        return $this->products::findorfail($id);
+        return $this->productRepo->getProductById($id);
     }
 
     public function saveProduct($request)
     {
-        $this->products::create($request);
+        $this->productRepo->createProduct($request);
     }
 
     public function updateProduct($request, $id)
     {
-        $this->products::where('id', $id)->update($request);
+        $this->productRepo->updateProduct($request, $id);
     }
 
     public function deleteProduct($id)
     {
-        $this->products::where('id', $id)->delete();
+        $this->productRepo->deleteProduct($id);
     }
 }

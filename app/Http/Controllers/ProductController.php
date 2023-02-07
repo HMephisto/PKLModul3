@@ -3,53 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
-use App\Interfaces\BrandRepositoryInterface;
-use App\Interfaces\ProductRepositoryInterface;
+use App\Services\BrandService;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
-    private ProductRepositoryInterface $productRepository;
-    private BrandRepositoryInterface $brandRepository;
+    private $productService;
+    private $brandService;
 
-    public function __construct(ProductRepositoryInterface $productRepository, BrandRepositoryInterface $brandRepository)
+    public function __construct(ProductService $productService, BrandService $brandService)
     {
-        $this->productRepository = $productRepository;
-        $this->brandRepository = $brandRepository;
+        $this->productService = $productService;
+        $this->brandService = $brandService;
     }
 
     public function showHome()
     {
-        return view('home', ["products" => $this->productRepository->getAllProduct()]);
+        return view('home', ["products" => $this->productService->getAllProduct()]);
     }
 
     public function showAddProduct()
     {
-        return view('add-product', ["brands" => $this->brandRepository->getAllBrand()]);
+        return view('add-product', ["brands" => $this->brandService->getAllBrand()]);
     }
 
     public function showEditProduct($id)
     {
         return view('edit-product', [
-            "product" => $this->productRepository->getProductById($id),
-            "brands" => $this->brandRepository->getAllBrand()
+            "product" => $this->productService->getDetailProduct($id),
+            "brands" => $this->brandService->getAllBrand()
         ]);
     }
 
     public function store(ProductRequest $request)
     {
-        $this->productRepository->createProduct($request->validated());
+        $this->productService->saveProduct($request->validated());
         return redirect()->route('home')->with("success", "Data was successfully added");
     }
 
     public function edit(ProductRequest $request, $id)
     {
-        $this->productRepository->updateProduct($request->validated(), $id);
+        $this->productService->updateProduct($request->validated(), $id);
         return redirect()->route('home')->with("success", "Data was successfully updated");
     }
 
     public function delete($id)
     {
-        $this->productRepository->deleteProduct($id);
+        $this->productService->deleteProduct($id);
         return redirect()->route('home')->with("success", "Data was successfully deleted");
     }
 }

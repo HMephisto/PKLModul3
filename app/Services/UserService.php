@@ -2,24 +2,19 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 
 class UserService
 {
-    private $users;
+    private $userRepo;
 
-    public function __construct()
+    public function __construct(UserRepositoryInterface $userRepo)
     {
-        $this->users = new User();
+        $this->userRepo = $userRepo;
     }
 
     public function saveUser($request)
     {
-        $this->users::create([
-            "name" => $request['name'],
-            "email" => $request['email'],
-            "password" => Hash::make( $request['password']) ,
-        ]);
+        $this->userRepo->createUser($request);
     }
 }

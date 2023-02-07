@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\BrandRepositoryInterface;
 use App\Models\Brand;
+use App\Repositories\Interfaces\BrandRepositoryInterface;
 
 class BrandRepository implements BrandRepositoryInterface
 {
@@ -36,10 +36,5 @@ class BrandRepository implements BrandRepositoryInterface
     public function deleteBrand($id)
     {
         $this->brands::where('id', $id)->delete();
-    }
-
-    public function getAllBrandWithProduct()
-    {
-        return $this->brands::with('product')->get();
     }
 }

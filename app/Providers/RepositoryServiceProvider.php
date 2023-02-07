@@ -2,9 +2,10 @@
 
 namespace App\Providers;
 
-use App\Interfaces\BrandRepositoryInterface;
-use App\Interfaces\ProductRepositoryInterface;
-use App\Interfaces\UserRepositoryInterface;
+
+use App\Repositories\Interfaces\BrandRepositoryInterface;
+use App\Repositories\Interfaces\ProductRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\BrandRepository;
 use App\Repositories\ProductRepository;
 use App\Repositories\UserRepository;

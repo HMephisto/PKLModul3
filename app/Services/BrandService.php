@@ -2,39 +2,39 @@
 
 namespace App\Services;
 
-use App\Models\Brand;
+use App\Repositories\Interfaces\BrandRepositoryInterface;
 
 class BrandService
 {
-    public $brands;
-    
-    public function __construct()
+    public $brandRepo;
+
+    public function __construct(BrandRepositoryInterface $brandRepo)
     {
-        $this->brands = new Brand();
+        $this->brandRepo = $brandRepo;
     }
 
     public function getAllBrand()
     {
-        return $this->brands::orderBy("id", "ASC")->get();
+        return $this->brandRepo->getAllBrand();
     }
 
     public function getDetailBrand($id)
     {
-        return $this->brands::findorfail($id);
+        return $this->brandRepo->getBrandById($id);
     }
 
     public function saveBrand($request)
     {
-        $this->brands::create($request);
+        $this->brandRepo->createBrand($request);
     }
 
     public function updateBrand($request, $id)
     {
-        $this->brands::where("id", $id)->update($request);
+        $this->brandRepo->updateBrand($request, $id);
     }
 
     public function deleteBrand($id)
     {
-        $this->brands::where("id", $id)->delete();
+        $this->brandRepo->deleteBrand($id);
     }
 }
