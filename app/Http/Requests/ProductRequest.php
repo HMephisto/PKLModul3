@@ -40,6 +40,13 @@ class ProductRequest extends FormRequest
                 "nullable",
                 "exists:brands,id",
             ],
+            "image" => [
+                "nullable",
+                "file",
+                "image",
+                "mimes:jpg,png"
+            ],
+
         ];
     }
 

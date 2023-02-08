@@ -24,18 +24,28 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->products::with("brand")->findorfail($id);
     }
 
-    public function createProduct($productDetails)
+    public function createProduct($productDetails, $imageName)
     {
-        $this->products::create($productDetails);
+        $this->products::create([
+            "name" => $productDetails["name"],
+            "price" => $productDetails["price"],
+            "brand_id" => $productDetails["brand_id"],
+            "image" => $imageName,
+        ]);
     }
 
-    public function updateProduct($newDetails, $id)
+    public function updateProduct($newDetails, $id, $imageName)
     {
-        $this->products::where('id', $id)->update($newDetails);
+        $this->products::findorfail($id)->update([
+            "name" => $newDetails["name"],
+            "price" => $newDetails["price"],
+            "brand_id" => $newDetails["brand_id"],
+            "image" => $imageName,
+        ]);
     }
 
     public function deleteProduct($id)
     {
-        $this->products::where('id', $id)->delete();
+        return $this->products::findorfail($id)->delete();
     }
 }

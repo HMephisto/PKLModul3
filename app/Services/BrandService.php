@@ -4,15 +4,16 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\BrandRepositoryInterface;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
 
 class BrandService
 {
     public $brandRepo;
+    public $imageService;
 
-    public function __construct(BrandRepositoryInterface $brandRepo)
+    public function __construct(BrandRepositoryInterface $brandRepo, ImageService $imageService)
     {
         $this->brandRepo = $brandRepo;
+        $this->imageService = $imageService;
     }
 
     public function getAllBrand()
@@ -27,7 +28,10 @@ class BrandService
 
     public function saveBrand($request)
     {
-        $image = $this->saveImage($request['image']);
+        $image = null;
+        if (Arr::exists($request, 'image')) {
+            $image = $this->imageService->saveImage($request['image']);
+        }
         $this->brandRepo->createBrand($request, $image);
     }
 
@@ -36,8 +40,10 @@ class BrandService
         $brandDetail = $this->brandRepo->getBrandById($id);
         $image = $brandDetail->image;
         if (Arr::exists($request, 'image')) {
-            $image = $this->saveImage($request['image']);
-            $this->deleteImage($brandDetail->image);
+            $image = $this->imageService->saveImage($request['image']);
+            if ($brandDetail->image != null) {
+                $this->imageService->deleteImage($brandDetail->image);
+            }
         }
         $this->brandRepo->updateBrand($request, $id, $image);
     }
@@ -45,26 +51,8 @@ class BrandService
     public function deleteBrand($id)
     {
         $brandDetail = $this->brandRepo->getBrandById($id);
-        if ($this->deleteImage($brandDetail->image)) {
+        if ($this->imageService->deleteImage($brandDetail->image)) {
             $this->brandRepo->deleteBrand($id);
         }
-    }
-
-    public function saveImage($file)
-    {
-        return Storage::putFile('images', $file);
-    }
-
-    public function editImage($oldFile, $newFile)
-    {
-        if ($this->deleteImage($oldFile)) {
-            return $this->saveImage($newFile);
-        }
-        return false;
-    }
-
-    public function deleteImage($filename)
-    {
-        return Storage::delete($filename);
     }
 }
