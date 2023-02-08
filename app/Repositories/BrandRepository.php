@@ -23,18 +23,24 @@ class BrandRepository implements BrandRepositoryInterface
         return $this->brands::findorfail($id);
     }
 
-    public function createBrand($BrandDetails)
+    public function createBrand($BrandDetails, $imageName)
     {
-        $this->brands::create($BrandDetails);
+        $this->brands::create([
+            "name" => $BrandDetails["name"],
+            "image" => $imageName,
+        ]);
     }
 
-    public function updateBrand($newDetails, $id)
+    public function updateBrand($newDetails, $id, $imageName)
     {
-        $this->brands::where('id', $id)->update($newDetails);
+        $this->brands::findorfail($id)->update([
+            "name" => $newDetails["name"],
+            "image" => $imageName,
+        ]);
     }
 
     public function deleteBrand($id)
     {
-        $this->brands::where('id', $id)->delete();
+        return $this->brands::findorfail($id)->delete();
     }
 }

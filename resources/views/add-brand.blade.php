@@ -27,6 +27,17 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="row mb-3 ">
+                            <label for="image" class="col-sm-2 col-form-label ">Image</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="image" name="image">
+                                @if ($errors->has('image'))
+                                    <div class="text-danger">
+                                        {{ $errors->first('image') }}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-center gap-2">
                             <a class="btn btn-danger btn-lg btn-block" href="/brands"
                                 style="max-width: 200px">back</a>

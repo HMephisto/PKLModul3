@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\BrandRepositoryInterface;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class BrandService
 {
@@ -25,16 +27,44 @@ class BrandService
 
     public function saveBrand($request)
     {
-        $this->brandRepo->createBrand($request);
+        $image = $this->saveImage($request['image']);
+        $this->brandRepo->createBrand($request, $image);
     }
 
     public function updateBrand($request, $id)
     {
-        $this->brandRepo->updateBrand($request, $id);
+        $brandDetail = $this->brandRepo->getBrandById($id);
+        $image = $brandDetail->image;
+        if (Arr::exists($request, 'image')) {
+            $image = $this->saveImage($request['image']);
+            $this->deleteImage($brandDetail->image);
+        }
+        $this->brandRepo->updateBrand($request, $id, $image);
     }
 
     public function deleteBrand($id)
     {
-        $this->brandRepo->deleteBrand($id);
+        $brandDetail = $this->brandRepo->getBrandById($id);
+        if ($this->deleteImage($brandDetail->image)) {
+            $this->brandRepo->deleteBrand($id);
+        }
+    }
+
+    public function saveImage($file)
+    {
+        return Storage::putFile('images', $file);
+    }
+
+    public function editImage($oldFile, $newFile)
+    {
+        if ($this->deleteImage($oldFile)) {
+            return $this->saveImage($newFile);
+        }
+        return false;
+    }
+
+    public function deleteImage($filename)
+    {
+        return Storage::delete($filename);
     }
 }

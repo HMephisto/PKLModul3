@@ -29,6 +29,12 @@ class BrandRequest extends FormRequest
                 "string",
                 "max:255"
             ],
+            "image" => [
+                "nullable",
+                "file",
+                "image",
+                "mimes:jpg,png"
+            ],
         ];
     }
 }

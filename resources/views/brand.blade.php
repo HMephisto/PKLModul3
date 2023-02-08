@@ -32,6 +32,7 @@
                 <tr>
                     <th scope="col">No</th>
                     <th scope="col">Name</th>
+                    <th scope="col">image</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@
                 <tr>
                     <th scope="row">{{ $key + 1 }}</th>
                     <td scope="row">{{ $brand->name }}</td>
+                    <td scope="row"><img src={{ asset($brand->image) }} alt="" width="200px"></td>
                     <td scope="row">
                         <form method="POST" action="brands/delete/{{ $brand->id }}">
                             @method('delete')
