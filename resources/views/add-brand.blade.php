@@ -36,11 +36,12 @@
                                         {{ $errors->first('image') }}
                                     </div>
                                 @endif
+                                <br>
+                                <img id="preview-image-before-upload" style="max-height: 150px; ">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center gap-2">
-                            <a class="btn btn-danger btn-lg btn-block" href="/brands"
-                                style="max-width: 200px">back</a>
+                            <a class="btn btn-danger btn-lg btn-block" href="/brands" style="max-width: 200px">back</a>
                             <button type="submit" value="Upload" class="btn btn-primary btn-lg btn-block"
                                 style="max-width: 200px ">Submit</button>
                         </div>
@@ -51,6 +52,18 @@
 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            $('#image').change(function() {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#preview-image-before-upload').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+        });
+    </script>
 </body>
 
 </html>

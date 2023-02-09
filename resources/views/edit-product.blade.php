@@ -73,6 +73,13 @@
                                         {{ $errors->first('image') }}
                                     </div>
                                 @endif
+                                <br>
+                                <div class="row mb-3 ">
+                                    <div class="col-sm-10">
+                                        <img id="preview-image-before-upload" src={{ asset($product->image) }}
+                                            style="max-height: 150px; ">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center gap-2">
@@ -83,8 +90,6 @@
                     </form>
                 </div>
             </div>
-
-
         </div>
     </div>
 </body>

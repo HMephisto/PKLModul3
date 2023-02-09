@@ -50,7 +50,7 @@
                     <td scope="row">
                         {{ empty($product->brand->name) ? 'Null' : $product->brand->name }}
                     </td>
-                    <td scope="row"><img src={{ asset($product->image) }} alt="" width="200px"></td>
+                    <td scope="row"><img src={{ asset($product->image) }} style="max-height: 150px;"></td>
                     <td scope="row">
                         <form method="POST" action="products/delete/{{ $product->id }}">
                             @method('delete')

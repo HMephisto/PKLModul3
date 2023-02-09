@@ -50,7 +50,7 @@
                                 @endif --}}
                                 <select name="brand_id" class="form-select" aria-label="Default select example">
                                     @foreach ($brands as $brand)
-                                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                     @endforeach
                                     <option value="" selected>Null</option>
                                 </select>
@@ -65,6 +65,8 @@
                                         {{ $errors->first('image') }}
                                     </div>
                                 @endif
+                                <br>
+                                <img id="preview-image-before-upload" style="max-height: 150px; ">
                             </div>
                         </div>
                         <div class="d-flex justify-content-center gap-2">
@@ -79,6 +81,18 @@
 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            $('#image').change(function() {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    $('#preview-image-before-upload').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+        });
+    </script>
 </body>
 
 </html>
