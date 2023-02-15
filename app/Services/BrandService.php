@@ -2,18 +2,19 @@
 
 namespace App\Services;
 
+use App\Helper\ImageHelper;
 use App\Repositories\Interfaces\BrandRepositoryInterface;
 use Illuminate\Support\Arr;
 
 class BrandService
 {
     public $brandRepo;
-    public $imageService;
+    public $imageHelper;
 
-    public function __construct(BrandRepositoryInterface $brandRepo, ImageService $imageService)
+    public function __construct(BrandRepositoryInterface $brandRepo, ImageHelper $imageHelper)
     {
         $this->brandRepo = $brandRepo;
-        $this->imageService = $imageService;
+        $this->imageHelper = $imageHelper;
     }
 
     public function getAllBrand()
@@ -28,31 +29,34 @@ class BrandService
 
     public function saveBrand($request)
     {
-        $image = null;
         if (Arr::exists($request, 'image')) {
-            $image = $this->imageService->saveImage($request['image']);
+            $image = $this->imageHelper->saveImage($request['image']);
+            $request['image'] = $image;
         }
-        $this->brandRepo->createBrand($request, $image);
+        return $this->brandRepo->createBrand($request);
     }
 
     public function updateBrand($request, $id)
     {
         $brandDetail = $this->brandRepo->getBrandById($id);
-        $image = $brandDetail->image;
         if (Arr::exists($request, 'image')) {
-            $image = $this->imageService->saveImage($request['image']);
+            $image = $this->imageHelper->saveImage($request['image']);
             if ($brandDetail->image != null) {
-                $this->imageService->deleteImage($brandDetail->image);
+                $this->imageHelper->deleteImage($brandDetail->image);
             }
+            $request['image'] = $image;
         }
-        $this->brandRepo->updateBrand($request, $id, $image);
+        return $this->brandRepo->updateBrand($request, $id);
     }
 
     public function deleteBrand($id)
     {
         $brandDetail = $this->brandRepo->getBrandById($id);
-        if ($this->imageService->deleteImage($brandDetail->image)) {
-            $this->brandRepo->deleteBrand($id);
+        if ($brandDetail->image != null) {
+            if ($this->imageHelper->deleteImage($brandDetail->image)) {
+                $this->brandRepo->deleteBrand($id);
+            }
         }
+        return $this->brandRepo->deleteBrand($id);
     }
 }

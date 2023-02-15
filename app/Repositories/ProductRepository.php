@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
+use Illuminate\Support\Traits\Tappable;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -16,7 +17,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAllProduct()
     {
-        return $this->products::oldest("id")->with("brand")->get();
+        return $this->products::all();
     }
 
     public function getProductById($id)
@@ -24,28 +25,30 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->products::with("brand")->findorfail($id);
     }
 
-    public function createProduct($productDetails, $imageName)
+    public function createProduct($productDetails)
     {
-        $this->products::create([
-            "name" => $productDetails["name"],
-            "price" => $productDetails["price"],
-            "brand_id" => $productDetails["brand_id"],
-            "image" => $imageName,
-        ]);
+        return $this->products::create($productDetails);
+        // return $this->products::create([
+        //     "name" => $productDetails["name"],
+        //     "price" => $productDetails["price"],
+        //     "brand_id" => $productDetails["brand_id"],
+        //     "image" => $imageName,
+        // ]);
     }
 
-    public function updateProduct($newDetails, $id, $imageName)
+    public function updateProduct($newDetails, $id)
     {
-        $this->products::findorfail($id)->update([
-            "name" => $newDetails["name"],
-            "price" => $newDetails["price"],
-            "brand_id" => $newDetails["brand_id"],
-            "image" => $imageName,
-        ]);
+        return tap($this->products::findorfail($id))->update($newDetails);
+        // return = tap($this->products)->update([
+        //     "name" => $newDetails["name"],
+        //     "price" => $newDetails["price"],
+        //     "brand_id" => $newDetails["brand_id"],
+        //     "image" => $newDetails["image"],
+        // ]);
     }
 
     public function deleteProduct($id)
     {
-        return $this->products::findorfail($id)->delete();
+        return tap($this->products::findorfail($id))->delete();
     }
 }

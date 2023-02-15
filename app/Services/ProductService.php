@@ -2,18 +2,19 @@
 
 namespace App\Services;
 
+use App\Helper\ImageHelper;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Support\Arr;
 
 class ProductService
 {
     private $productRepo;
-    private $imageService;
+    private $imageHelper;
 
-    public function __construct(ProductRepositoryInterface $productRepo, ImageService $imageService)
+    public function __construct(ProductRepositoryInterface $productRepo, ImageHelper $imageHelper)
     {
         $this->productRepo = $productRepo;
-        $this->imageService = $imageService;
+        $this->imageHelper = $imageHelper;
     }
 
     public function getAllProduct()
@@ -28,31 +29,33 @@ class ProductService
 
     public function saveProduct($request)
     {
-        $image = null;
         if (Arr::exists($request, 'image')) {
-            $image = $this->imageService->saveImage($request['image']);
+            $image = $this->imageHelper->saveImage($request['image']);
+            $request['image'] = $image;
         }
-        $this->productRepo->createProduct($request, $image);
+        return $this->productRepo->createProduct($request);
     }
 
     public function updateProduct($request, $id)
     {
         $productDetail = $this->productRepo->getProductById($id);
-        $image = $productDetail->image;
         if (Arr::exists($request, 'image')) {
-            $image = $this->imageService->saveImage($request['image']);
+            $image = $this->imageHelper->saveImage($request['image  ']);
             if ($productDetail->image != null) {
-                $this->imageService->deleteImage($productDetail->image);
+                $this->imageHelper->deleteImage($productDetail->image);
             }
+            $request['image'] = $image;
         }
-        $this->productRepo->updateProduct($request, $id, $image);
+        return $this->productRepo->updateProduct($request, $id);
     }
 
     public function deleteProduct($id)
     {
         $productDetail = $this->productRepo->getProductById($id);
-        if ($this->imageService->deleteImage($productDetail->image)) {
-            $this->productRepo->deleteProduct($id);
+        if ($productDetail->image != null) {
+            if ($this->imageHelper->deleteImage($productDetail->image)) {
+            }
         }
+        return $this->productRepo->deleteProduct($id);
     }
 }

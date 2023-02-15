@@ -15,6 +15,6 @@ class UserService
 
     public function saveUser($request)
     {
-        $this->userRepo->createUser($request);
+        return $this->userRepo->createUser($request);
     }
 }

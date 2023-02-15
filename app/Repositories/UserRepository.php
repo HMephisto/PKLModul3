@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -26,16 +25,16 @@ class UserRepository implements UserRepositoryInterface
 
     public function createUser($userDetails)
     {
-        $this->users::create([
+        return $this->users::create([
             "name" => $userDetails["name"],
             "email" => $userDetails["email"],
-            "password" => Hash::make($userDetails["password"]),
+            "password" => bcrypt($userDetails["password"]),
         ]);
     }
 
     public function updateUser($newDetails, $id)
     {
-        $this->users::where('id', $id)->update($newDetails);
+        return $this->users::where('id', $id)->update($newDetails);
     }
 
     public function deleteUser($id)
