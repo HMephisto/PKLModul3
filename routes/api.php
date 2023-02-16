@@ -27,15 +27,14 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/', [ProductController::class, 'getAllProduct']);
         Route::post('/', [ProductController::class, 'store']);
         Route::get('/{product_id}', [ProductController::class, 'getProductDetail']);
-        Route::post('/{product_id}', [ProductController::class, 'edit']);
+        Route::put('/{product_id}', [ProductController::class, 'edit']);
         Route::delete('/{product_id}', [ProductController::class, 'delete']);
     });
-    
     Route::prefix('brands')->group(function () {
         Route::get('/', [BrandController::class, 'getAllBrand']);
         Route::post('/', [BrandController::class, 'store']);
         Route::get('/{brand_id}', [BrandController::class, 'getBrandDetail']);
-        Route::post('/{brand_id}', [BrandController::class, 'edit']);
+        Route::put('/{brand_id}', [BrandController::class, 'edit']);
         Route::delete('/{brand_id}', [BrandController::class, 'delete']);
     });
 
