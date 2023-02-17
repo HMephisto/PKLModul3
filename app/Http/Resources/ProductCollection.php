@@ -6,6 +6,9 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ProductCollection extends ResourceCollection
 {
+    public $status;
+    public $message;
+
     /**
      * Transform the resource collection into an array.
      *
@@ -14,13 +17,21 @@ class ProductCollection extends ResourceCollection
      */
     public static $wrap = null;
 
+    public function __construct($resource, $status = null, $message = null,)
+    {
+        parent::__construct($resource);
+        $this->status =  $status;
+        $this->message = $message;
+    }
+
     public function toArray($request)
     {
         return [
-            'success' => true,
+            'status' => $this->status,
+            'message' => $this->message,
             'data' => [
-                'product' => $this->collection,
-                'productCount' => $this->count()
+                'Product' => $this->collection,
+                'brandCount' => $this->count()
             ]
         ];
     }

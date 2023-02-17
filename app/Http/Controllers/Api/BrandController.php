@@ -19,34 +19,38 @@ class BrandController extends Controller
 
     public function getAllBrand()
     {
-        return new BrandCollection($this->brandService->getAllBrand());
+        return new BrandCollection($this->brandService->getAllBrand(), "success", "List Data Brand");
     }
 
     public function getBrandDetail($id)
     {
-        return $this->brandResponse($this->brandService->getDetailBrand($id));
+        return $this->brandResponse($this->brandService->getDetailBrand($id), "success", "Data found");
     }
 
     public function store(BrandRequest $request)
     {
         $product = $this->brandService->saveBrand($request->validated());
-        return $this->brandResponse($product);
+        return $this->brandResponse($product, "success", "Data stored");
     }
 
     public function edit(BrandRequest $request, $id)
     {
         $product = $this->brandService->updateBrand($request->validated(), $id);
-        return $this->brandResponse($product);
+        return $this->brandResponse($product, "success", "Brand updated successfully");
     }
 
     public function delete($id)
     {
         $product = $this->brandService->deleteBrand($id);
-        return $this->brandResponse($product);
+        return $this->brandResponse($product, "success", "Brand deleted successfully");
     }
 
-    public function brandResponse($brand)
+    public function brandResponse($brand, $status, $message)
     {
-        return new BrandResource($brand);
+        return response()->json([
+            "status" => $status, 
+            "message" => $message,
+            "data" => new BrandResource($brand)
+            ]);
     }
 }

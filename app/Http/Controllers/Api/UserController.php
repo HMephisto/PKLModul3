@@ -21,17 +21,23 @@ class UserController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = $this->userService->saveUser($request->validated());
-        return new UserResource($user);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'register success',
+            'data' => new UserResource($user)
+        ]);
     }
 
     public function login(LoginRequest $request)
     {
         if (!$token = auth()->guard('api')->attempt($request->validated())) {
             return response()->json([
-                'message'=> "Email or Password is incorrect"
+                'message' => "Email or Password is incorrect"
             ], 401);
         };
         return response()->json([
+            'status' => 'success',
+            'message' => 'login success',
             'user' => auth()->guard('api')->user(),
             'token' => $token,
         ], 200);

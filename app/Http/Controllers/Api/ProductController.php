@@ -17,36 +17,40 @@ class ProductController extends Controller
         $this->productService = $productService;
     }
 
-    public function getAllProduct(): ProductCollection
+    public function getAllProduct()
     {
-        return new ProductCollection($this->productService->getAllProduct());
+        return new ProductCollection($this->productService->getAllProduct(), "success", "List Data Product");
     }
 
-    public function getProductDetail($product_id): ProductResource
+    public function getProductDetail($product_id)
     {
-        return $this->productResponse($this->productService->getDetailProduct($product_id));
+        return $this->productResponse($this->productService->getDetailProduct($product_id), "success", "Data found");
     }
 
-    public function store(ProductRequest $request): ProductResource
+    public function store(ProductRequest $request)
     {
         $product = $this->productService->saveProduct($request->validated());
-        return $this->productResponse($product);
+        return $this->productResponse($product, "success", "Data stored");
     }
 
-    public function edit(ProductRequest $request, $product_id): ProductResource
+    public function edit(ProductRequest $request, $product_id)
     {
         $product = $this->productService->updateProduct($request->validated(), $product_id);
-        return $this->productResponse($product);
+        return $this->productResponse($product, "success", "Product updated successfully");
     }
 
-    public function delete($id): ProductResource
+    public function delete($id)
     {
         $product = $this->productService->deleteProduct($id);
-        return $this->productResponse($product);
+        return $this->productResponse($product, "success", "Brand deleted successfully");
     }
 
-    public function productResponse($product): ProductResource
+    public function productResponse($product, $status, $message)
     {
-        return new ProductResource($product);
+        return response()->json([
+            "status" => $status,
+            "message" => $message,
+            "data" => new ProductResource($product)
+        ]);
     }
 }
