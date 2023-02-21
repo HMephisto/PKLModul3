@@ -29,10 +29,10 @@ class BrandService
 
     public function saveBrand($request)
     {
-        if (Arr::exists($request, 'image')) {
-            $image = $this->imageHelper->saveImage($request['image']);
-            $request['image'] = $image;
-        }
+//        if (Arr::exists($request, 'image')) {
+//            $image = $this->imageHelper->saveImage($request['image']);
+//            $request['image'] = $image;
+//        }
         return $this->brandRepo->createBrand($request);
     }
 
@@ -58,5 +58,13 @@ class BrandService
             }
         }
         return $this->brandRepo->deleteBrand($id);
+    }
+
+    public function uploadFile($request)
+    {
+        $filename = time() . "-brand." . $request['image']->getClientOriginalExtension();
+        $this->imageHelper->upload($request['image'], $filename);
+
+        return $filename;
     }
 }

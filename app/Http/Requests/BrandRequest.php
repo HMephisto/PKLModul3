@@ -33,9 +33,6 @@ class BrandRequest extends FormRequest
             ],
             "image" => [
                 "nullable",
-                "file",
-                "image",
-                "mimes:jpg,png"
             ],
         ];
     }

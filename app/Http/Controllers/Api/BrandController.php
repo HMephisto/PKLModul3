@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
+use App\Http\Requests\UploadFileRequest;
 use App\Http\Resources\BrandCollection;
 use App\Http\Resources\BrandResource;
 use App\Services\BrandService;
+use http\Env\Request;
 
 class BrandController extends Controller
 {
@@ -45,10 +47,22 @@ class BrandController extends Controller
         return $this->brandResponse($product, "success", "Brand deleted successfully");
     }
 
+    public function uploadFile(UploadFileRequest $request)
+    {
+        $filename = $this->brandService->uploadFile($request);
+        return response()->json([
+            "status" => "success",
+            "message" => "Upload success",
+            "data" => [
+                "filename" => $filename
+            ]
+        ]);
+    }
+
     public function brandResponse($brand, $status, $message)
     {
         return response()->json([
-            "status" => $status, 
+            "status" => $status,
             "message" => $message,
             "data" => new BrandResource($brand)
             ]);

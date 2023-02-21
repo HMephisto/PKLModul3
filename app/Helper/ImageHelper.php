@@ -11,6 +11,11 @@ class ImageHelper
         return Storage::disk('public')->put('images', $file);
     }
 
+    public function upload($file, $filename)
+    {
+        return Storage::disk('public')->putFileAs("images", $file, $filename);
+    }
+
     public function editImage($oldFile, $newFile)
     {
         if ($this->deleteImage($oldFile)) {

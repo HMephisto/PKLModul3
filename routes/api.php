@@ -33,6 +33,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('brands')->group(function () {
         Route::get('/', [BrandController::class, 'getAllBrand']);
         Route::post('/', [BrandController::class, 'store']);
+        Route::post('/upload', [BrandController::class, 'uploadFile']);
         Route::get('/{brand_id}', [BrandController::class, 'getBrandDetail']);
         Route::put('/{brand_id}', [BrandController::class, 'edit']);
         Route::delete('/{brand_id}', [BrandController::class, 'delete']);
