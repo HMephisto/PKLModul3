@@ -36,6 +36,16 @@ class ProductService
         return $this->productRepo->createProduct($request);
     }
 
+    public function addCategory($request)
+    {
+        $this->productRepo->attachCategory($request['product_id'], $request['category_id']);
+    }
+
+    public function removeCategory($request)
+    {
+        $this->productRepo->detachCategory($request['product_id'], $request['category_id']);
+    }
+
     public function updateProduct($request, $id)
     {
         $productDetail = $this->productRepo->getProductById($id);

@@ -16,12 +16,12 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAllProduct()
     {
-        return $this->products::with('brand')->paginate();
+        return $this->products::with(["brand", "categories"])->paginate();
     }
 
     public function getProductById($id)
     {
-        return $this->products::with("brand")->findorfail($id);
+        return $this->products::with(["brand", "categories"])->findorfail($id);
     }
 
     public function createProduct($productDetails)
@@ -33,6 +33,20 @@ class ProductRepository implements ProductRepositoryInterface
         //     "brand_id" => $productDetails["brand_id"],
         //     "image" => $imageName,
         // ]);
+    }
+
+    public function attachCategory($id, $cateegory_id)
+    {
+        $product = $this->products::findorfail($id);
+
+        $product->categories()->attach($cateegory_id);
+    }
+
+    public function detachCategory($id, $cateegory_id)
+    {
+        $product = $this->products::findorfail($id);
+
+        $product->categories()->detach($cateegory_id);
     }
 
     public function updateProduct($newDetails, $id)

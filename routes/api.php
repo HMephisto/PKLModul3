@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,8 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/', [ProductController::class, 'store']);
         Route::get('/{product_id}', [ProductController::class, 'getProductDetail']);
         Route::post('/upload', [ProductController::class, 'uploadFile']);
+        Route::post('/category', [ProductController::class, 'addCategory']);
+        Route::delete('/category', [ProductController::class, 'removeCategory']);
         Route::put('/{product_id}', [ProductController::class, 'edit']);
         Route::delete('/{product_id}', [ProductController::class, 'delete']);
     });
@@ -38,6 +41,13 @@ Route::middleware('auth:api')->group(function () {
         Route::post('/upload', [BrandController::class, 'uploadFile']);
         Route::put('/{brand_id}', [BrandController::class, 'edit']);
         Route::delete('/{brand_id}', [BrandController::class, 'delete']);
+    });
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'getAllCategory']);
+        Route::post('/', [CategoryController::class, 'store']);
+        Route::get('/{categories_id}', [CategoryController::class, 'getCategoryDetail']);
+        Route::put('/{categories_id}', [CategoryController::class, 'edit']);
+        Route::delete('/{categories_id}', [CategoryController::class, 'delete']);
     });
 
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');

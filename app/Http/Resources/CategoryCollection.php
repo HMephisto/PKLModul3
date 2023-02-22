@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ProductCollection extends ResourceCollection
+class CategoryCollection extends ResourceCollection
 {
     public $status;
     public $message;
@@ -16,14 +16,20 @@ class ProductCollection extends ResourceCollection
         $this->message = $message;
     }
 
+    /**
+     * Transform the resource collection into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
     public function toArray($request)
     {
         return [
             'status' => $this->status,
             'message' => $this->message,
             'data' => [
-                'Product' => $this->collection,
-                'productCount' => $this->count()
+                'Category' => $this->collection,
+                'categoryCount' => $this->count()
             ]
         ];
     }

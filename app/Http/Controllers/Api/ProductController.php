@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductCategoryRequest;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Resources\ProductCollection;
@@ -43,7 +44,7 @@ class ProductController extends Controller
     public function delete($id)
     {
         $product = $this->productService->deleteProduct($id);
-        return $this->productResponse($product, "success", "Brand deleted successfully");
+        return $this->productResponse($product, "success", "Product deleted successfully");
     }
 
     public function uploadFile(UploadFileRequest $request)
@@ -55,6 +56,24 @@ class ProductController extends Controller
             "data" => [
                 "filename" => $filename
             ]
+        ]);
+    }
+
+    public function addCategory(ProductCategoryRequest $request)
+    {
+        $this->productService->addCategory($request->validated());
+        return response()->json([
+            "status" => "success",
+            "message" => "Category added successfully",
+        ]);
+    }
+    
+    public function removeCategory(ProductCategoryRequest $request)
+    {
+        $this->productService->removeCategory($request->validated());
+        return response()->json([
+            "status" => "success",
+            "message" => "Category removed successfully",
         ]);
     }
 
