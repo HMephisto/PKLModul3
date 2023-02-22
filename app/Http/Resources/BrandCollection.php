@@ -8,13 +8,7 @@ class BrandCollection extends ResourceCollection
 {
     public $status;
     public $message;
-    /**
-     * Transform the resource collection into an array.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
-     */
-
+    
     public function __construct($resource, $status = null, $message = null,)
     {
         parent::__construct($resource);

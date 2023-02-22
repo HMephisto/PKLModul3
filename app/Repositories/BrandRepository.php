@@ -15,7 +15,7 @@ class BrandRepository implements BrandRepositoryInterface
     }
     public function getAllBrand()
     {
-        return $this->brands::oldest("id")->get();
+        return $this->brands::with("product")->paginate();
     }
 
     public function getBrandById($id)

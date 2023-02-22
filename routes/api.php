@@ -27,6 +27,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/', [ProductController::class, 'getAllProduct']);
         Route::post('/', [ProductController::class, 'store']);
         Route::get('/{product_id}', [ProductController::class, 'getProductDetail']);
+        Route::post('/upload', [ProductController::class, 'uploadFile']);
         Route::put('/{product_id}', [ProductController::class, 'edit']);
         Route::delete('/{product_id}', [ProductController::class, 'delete']);
     });
@@ -34,6 +35,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('/', [BrandController::class, 'getAllBrand']);
         Route::post('/', [BrandController::class, 'store']);
         Route::get('/{brand_id}', [BrandController::class, 'getBrandDetail']);
+        Route::post('/upload', [BrandController::class, 'uploadFile']);
         Route::put('/{brand_id}', [BrandController::class, 'edit']);
         Route::delete('/{brand_id}', [BrandController::class, 'delete']);
     });

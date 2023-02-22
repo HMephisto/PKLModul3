@@ -11,6 +11,11 @@ class ImageHelper
         return Storage::disk('public')->put('images', $file);
     }
 
+    public function upload($file, $filename)
+    {
+        return Storage::disk('public')->putFileAs("images", $file, $filename);
+    }
+
     public function editImage($oldFile, $newFile)
     {
         if ($this->deleteImage($oldFile)) {
@@ -21,6 +26,6 @@ class ImageHelper
 
     public function deleteImage($filename)
     {
-        return Storage::delete($filename);
+        return Storage::delete("images/".$filename);
     }
 }

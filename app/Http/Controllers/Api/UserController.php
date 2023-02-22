@@ -38,8 +38,10 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'login success',
-            'user' => auth()->guard('api')->user(),
-            'token' => $token,
+            'data' => [
+                'user' => auth()->guard('api')->user(),
+                'token' => $token,
+            ]
         ], 200);
     }
 

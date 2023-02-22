@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
-use Illuminate\Support\Traits\Tappable;
 
 class ProductRepository implements ProductRepositoryInterface
 {
@@ -17,7 +16,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function getAllProduct()
     {
-        return $this->products::all();
+        return $this->products::with('brand')->paginate();
     }
 
     public function getProductById($id)

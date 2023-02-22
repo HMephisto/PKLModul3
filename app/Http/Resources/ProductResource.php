@@ -20,7 +20,7 @@ class ProductResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->price,
-            'image' => $this->image,
+            'image' => $this->image !== null ? url('images/' . $this->image) : null,
             'brand_id' => $this->brand_id,
             'brand' => new BrandResource($this->whenLoaded('brand')),
             'created_at' => $this->created_at,

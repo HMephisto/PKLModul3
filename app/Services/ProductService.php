@@ -29,10 +29,10 @@ class ProductService
 
     public function saveProduct($request)
     {
-        if (Arr::exists($request, 'image')) {
-            $image = $this->imageHelper->saveImage($request['image']);
-            $request['image'] = $image;
-        }
+        // if (Arr::exists($request, 'image')) {
+        //     $image = $this->imageHelper->saveImage($request['image']);
+        //     $request['image'] = $image;
+        // }
         return $this->productRepo->createProduct($request);
     }
 
@@ -40,11 +40,9 @@ class ProductService
     {
         $productDetail = $this->productRepo->getProductById($id);
         if (Arr::exists($request, 'image')) {
-            $image = $this->imageHelper->saveImage($request['image  ']);
             if ($productDetail->image != null) {
                 $this->imageHelper->deleteImage($productDetail->image);
             }
-            $request['image'] = $image;
         }
         return $this->productRepo->updateProduct($request, $id);
     }
@@ -53,9 +51,15 @@ class ProductService
     {
         $productDetail = $this->productRepo->getProductById($id);
         if ($productDetail->image != null) {
-            if ($this->imageHelper->deleteImage($productDetail->image)) {
-            }
+            $this->imageHelper->deleteImage($productDetail->image);
         }
         return $this->productRepo->deleteProduct($id);
+    }
+
+    public function uploadFile($request)
+    {
+        $filename = time() . "-product." . $request['image']->getClientOriginalExtension();
+        $this->imageHelper->upload($request['image'], $filename);
+        return $filename;
     }
 }

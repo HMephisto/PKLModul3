@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\UploadFileRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Services\ProductService;
@@ -43,6 +44,18 @@ class ProductController extends Controller
     {
         $product = $this->productService->deleteProduct($id);
         return $this->productResponse($product, "success", "Brand deleted successfully");
+    }
+
+    public function uploadFile(UploadFileRequest $request)
+    {
+        $filename = $this->productService->uploadFile($request);
+        return response()->json([
+            "status" => "success",
+            "message" => "Upload success",
+            "data" => [
+                "filename" => $filename
+            ]
+        ]);
     }
 
     public function productResponse($product, $status, $message)
