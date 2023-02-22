@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Requests\SearchRequest;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
@@ -25,6 +26,11 @@ class CategoryController extends Controller
     public function getCategoryDetail($category_id)
     {
         return $this->categoryResponse($this->categoryService->getDetailCategory($category_id), "success", "Data found");
+    }
+
+    public function searchProduct(SearchRequest $request)
+    {
+        return new CategoryCollection($this->categoryService->searchProduct($request->name), "success", "Data found");
     }
 
     public function store(CategoryRequest $request)

@@ -24,6 +24,11 @@ class ProductRepository implements ProductRepositoryInterface
         return $this->products::with(["brand", "categories"])->findorfail($id);
     }
 
+    public function searchProduct($name)
+    {
+        return $this->products::where("name", "ilike", "%".$name."%")->paginate();
+    }
+
     public function createProduct($productDetails)
     {
         return $this->products::create($productDetails);

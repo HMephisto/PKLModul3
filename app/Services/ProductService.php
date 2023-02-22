@@ -27,6 +27,11 @@ class ProductService
         return $this->productRepo->getProductById($id);
     }
 
+    public function searchProduct($name)
+    {
+        return $this->productRepo->searchProduct($name);
+    }
+
     public function saveProduct($request)
     {
         // if (Arr::exists($request, 'image')) {

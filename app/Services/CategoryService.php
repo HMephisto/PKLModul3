@@ -23,6 +23,11 @@ class CategoryService
         return $this->categoryRepo->getCategoryById($id);
     }
 
+    public function searchProduct($name)
+    {
+        return $this->categoryRepo->searchProduct($name);
+    }
+
     public function saveCategory($request)
     {
         return $this->categoryRepo->createCategory($request);

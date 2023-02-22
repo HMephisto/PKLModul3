@@ -27,6 +27,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/', [ProductController::class, 'getAllProduct']);
         Route::post('/', [ProductController::class, 'store']);
+        Route::get('/search', [ProductController::class, 'searchProduct']);
         Route::get('/{product_id}', [ProductController::class, 'getProductDetail']);
         Route::post('/upload', [ProductController::class, 'uploadFile']);
         Route::post('/category', [ProductController::class, 'addCategory']);
@@ -37,6 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('brands')->group(function () {
         Route::get('/', [BrandController::class, 'getAllBrand']);
         Route::post('/', [BrandController::class, 'store']);
+        Route::get('/search', [BrandController::class, 'searchProduct']);
         Route::get('/{brand_id}', [BrandController::class, 'getBrandDetail']);
         Route::post('/upload', [BrandController::class, 'uploadFile']);
         Route::put('/{brand_id}', [BrandController::class, 'edit']);
@@ -45,6 +47,7 @@ Route::middleware('auth:api')->group(function () {
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'getAllCategory']);
         Route::post('/', [CategoryController::class, 'store']);
+        Route::get('/search', [CategoryController::class, 'searchProduct']);
         Route::get('/{categories_id}', [CategoryController::class, 'getCategoryDetail']);
         Route::put('/{categories_id}', [CategoryController::class, 'edit']);
         Route::delete('/{categories_id}', [CategoryController::class, 'delete']);

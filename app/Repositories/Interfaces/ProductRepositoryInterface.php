@@ -7,6 +7,7 @@ interface ProductRepositoryInterface
     public function getAllProduct();
     public function getProductById($id);
     public function createProduct(array $productDetails);
+    public function searchProduct($name);
     public function attachCategory($id, $cateegory_id);
     public function detachCategory($id, $cateegory_id);
     public function updateProduct(array $newDetails, $id);

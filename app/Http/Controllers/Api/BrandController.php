@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BrandRequest;
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Resources\BrandCollection;
 use App\Http\Resources\BrandResource;
@@ -26,6 +27,11 @@ class BrandController extends Controller
     public function getBrandDetail($id)
     {
         return $this->brandResponse($this->brandService->getDetailBrand($id), "success", "Data found");
+    }
+
+    public function searchProduct(SearchRequest $request)
+    {
+        return new BrandCollection($this->brandService->searchProduct($request->name), "success", "Data found");
     }
 
     public function store(BrandRequest $request)

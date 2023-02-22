@@ -23,6 +23,11 @@ class CategoryRepository implements CategoryRepositoryInterface
         return $this->categories::with('child')->findorfail($id);
     }
 
+    public function searchProduct($name)
+    {
+        return $this->categories::where("name", "ilike", "%".$name."%")->paginate();
+    }
+
     public function createCategory($CategoryDetails)
     {
         return $this->categories::create($CategoryDetails);

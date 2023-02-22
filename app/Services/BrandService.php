@@ -27,6 +27,11 @@ class BrandService
         return $this->brandRepo->getBrandById($id);
     }
 
+    public function searchProduct($name)
+    {
+        return $this->brandRepo->searchProduct($name);
+    }
+
     public function saveBrand($request)
     {
         // if (Arr::exists($request, 'image')) {

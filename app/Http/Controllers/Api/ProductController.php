@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductCategoryRequest;
 use App\Http\Requests\ProductRequest;
+use App\Http\Requests\SearchRequest;
 use App\Http\Requests\UploadFileRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
@@ -27,6 +28,11 @@ class ProductController extends Controller
     public function getProductDetail($product_id)
     {
         return $this->productResponse($this->productService->getDetailProduct($product_id), "success", "Data found");
+    }
+
+    public function searchProduct(SearchRequest $request)
+    {
+        return new ProductCollection($this->productService->searchProduct($request->name), "success", "Data found");
     }
 
     public function store(ProductRequest $request)
