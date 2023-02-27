@@ -15,17 +15,17 @@ class CategoryRepository implements CategoryRepositoryInterface
     }
     public function getAllCategory()
     {
-        return $this->categories::with('child')->paginate();
+        return $this->categories::with(['products', 'child'])->paginate();
     }
 
     public function getCategoryById($id)
     {
-        return $this->categories::with('child')->findorfail($id);
+        return $this->categories::with(['products', 'child'])->findorfail($id);
     }
 
     public function searchProduct($name)
     {
-        return $this->categories::where("name", "ilike", "%".$name."%")->paginate();
+        return $this->categories::where("name", "ilike", "%".$name."%")->with(['products', 'child'])->paginate();
     }
 
     public function createCategory($CategoryDetails)

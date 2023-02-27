@@ -48,7 +48,8 @@ class UserController extends Controller
     public function logout()
     {
         //remove token
-        $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
+        // $removeToken = JWTAuth::invalidate(JWTAuth::getToken());
+        $removeToken = JWTAuth::parseToken()->invalidate();
 
         if ($removeToken) {
             //return response JSON

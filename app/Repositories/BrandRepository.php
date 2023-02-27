@@ -25,7 +25,7 @@ class BrandRepository implements BrandRepositoryInterface
 
     public function searchProduct($name)
     {
-        return $this->brands::where("name", "ilike", "%".$name."%")->paginate();
+        return $this->brands::where("name", "ilike", "%".$name."%")->with("product")->paginate();
     }
 
     public function createBrand($BrandDetails)
